@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
@@ -20,8 +21,13 @@ class Controller extends BaseController
         $randomNumber = (rand(0,($totalQuotes-1)));
         $randomQuote = Controller::$quotes[$randomNumber];
         return response()->json(['quote' => $randomQuote]);
-
-
+    }
+    
+    public static function getImage()
+    {
+        $randomNumber = (rand(1,15));
+        $url = 'https://myimagesteisbucket.s3.amazonaws.com/img/image'.$randomNumber.'.jpg';
+        return view('image.index', ['url' => $url, 'server_ip' => gethostbyname(gethostname())]);
     }
 
 }
